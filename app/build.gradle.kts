@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
 }
 
 android {
@@ -7,7 +7,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.riseofthefighter"
+        // Corrected Application ID
+        applicationId = "com.nikolassievertsen.riseofthefighter"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -27,18 +28,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildFeatures {
+        // Enabling ViewBinding for easier UI component access
         viewBinding = true
     }
 }
 
 dependencies {
-    // Core Android & UI
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.navigation:navigation-fragment:2.7.7")
-    implementation("androidx.navigation:navigation-ui:2.7.7")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    // Using the version catalog (libs.versions.toml) for dependencies
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.constraintlayout)
+    implementation("androidx.activity:activity:1.8.0") // Added for ComponentActivity
 
     // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.7.0")
@@ -48,16 +48,10 @@ dependencies {
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
-
-    // JSON Serialization for Save/Export
-    implementation("com.google.code.gson:gson:2.10.1")
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
 
     // Unit Testing
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.5.1")
-
-    // Instrumented Testing
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.room:room-testing:$roomVersion")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }
